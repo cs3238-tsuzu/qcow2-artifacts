@@ -22,6 +22,11 @@ jobs:
       - name: Install zx
         run: |
           npm i -g zx
+      
+      - name: Set up git
+        run: |
+          git config --global user.email "cs3238-tsuzu@users.noreply.github.com"
+          git config --global user.name "Tsuzu"
 
       - name: packer validator/linter
         run: |
