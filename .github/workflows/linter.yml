@@ -62,7 +62,7 @@ jobs:
 
             if (unformatted.length && pullReq) {
               await $`git add . && git commit -m "packer fix"`;
-              await $`git push origin ${{ github.base_ref }}`;
+              await $`git push origin ${{ github.head_ref }}`;
 
               unformatted = await format(false);
             }
