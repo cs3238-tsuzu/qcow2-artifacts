@@ -66,8 +66,9 @@ jobs:
               await $`git add . && git commit -m "packer fix"`;
               await $`git push origin ${{ github.head_ref }}`;
 
-              unformatted = await format(false);
+              unformatted = await format(true);
             }
+            await $`git diff`
 
             if (unformatted.length) {
               throw new Error("Following files are not formatted:\n" + unformatted.join("\n"));
