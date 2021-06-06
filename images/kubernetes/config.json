@@ -1,0 +1,40 @@
+{
+    "builders": [
+      {
+        "disk_discard": "unmap",
+        "disk_image": true,
+        "disk_interface": "virtio-scsi",
+        "disk_size": "5120M",
+        "headless": true,
+        "http_directory": "common/cloud-data",
+        "iso_checksum_type": "sha256",
+        "iso_checksum_url": "http://cloud-images.ubuntu.com/releases/bionic/release/SHA256SUMS",
+        "iso_url": "http://cloud-images.ubuntu.com/releases/bionic/release/ubuntu-18.04-server-cloudimg-amd64.img",
+        "qemuargs": [
+          [
+            "-smbios",
+            "type=1,serial=ds=nocloud-net;instance-id=packer;seedfrom=http://{{ .HTTPIP }}:{{ .HTTPPort }}/"
+          ]
+        ],
+        "ssh_password": "ubuntupassword",
+        "ssh_username": "ubuntu",
+        "type": "qemu"
+      }
+    ],
+    "provisioners": [
+      {
+        "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'",
+        "inline": [
+          "mv /etc/netplan/50-cloud-init.yaml /root/",
+          "mv /etc/sudoers.d/90-cloud-init-users /root/",
+          "/usr/bin/truncate --size 0 /etc/machine-id",
+          "rm -r /var/lib/cloud /var/lib/dbus/machine-id ",
+          "for i in group gshadow passwd shadow subuid subgid; do mv /etc/$i- /etc/$i; done",
+          "/bin/sync",
+          "/sbin/fstrim -v /"
+        ],
+        "remote_folder": "/tmp",
+        "type": "shell"
+      }
+    ]
+  }

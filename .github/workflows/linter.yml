@@ -1,0 +1,33 @@
+name: Packer
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use latest Packer
+        uses: hashicorp-contrib/setup-packer@v1
+
+      - uses: actions/github-script@v4
+        run: |
+          import {$} from "zx";
+
+          const configs = (await $`find images -name "*.json"`)
+              .stdout
+              .split("\n")
+              .filter(x => x !== "");
+
+          await Promise.all(configs.map(async c => {
+              await $`packer validate ${c}`;
+              const formatted = await $`packer fix ${c}`;
+
+              if (formatted.stdout !== await false.readFile(c)) {
+                  throw new Error(`${c} is not formatted`);
+              }
+          }));
