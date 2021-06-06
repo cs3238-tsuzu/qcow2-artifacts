@@ -41,7 +41,7 @@ jobs:
                 const formatted = (await $`packer fix ${c}`).stdout;
 
                 if (formatted === await fs.readFile(c)) {
-                  continue;
+                  return;
                 }
 
                 unformatted.push(c);
