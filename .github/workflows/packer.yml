@@ -1,6 +1,5 @@
 name: Packer
 
-
 on:
   push:
   pull_request:

@@ -15,19 +15,20 @@ jobs:
         uses: hashicorp-contrib/setup-packer@v1
 
       - uses: actions/github-script@v4
-        run: |
-          import {$} from "zx";
+        with: 
+          script: |
+            import {$} from "zx";
 
-          const configs = (await $`find images -name "*.json"`)
-              .stdout
-              .split("\n")
-              .filter(x => x !== "");
+            const configs = (await $`find images -name "*.json"`)
+                .stdout
+                .split("\n")
+                .filter(x => x !== "");
 
-          await Promise.all(configs.map(async c => {
-              await $`packer validate ${c}`;
-              const formatted = await $`packer fix ${c}`;
+            await Promise.all(configs.map(async c => {
+                await $`packer validate ${c}`;
+                const formatted = await $`packer fix ${c}`;
 
-              if (formatted.stdout !== await false.readFile(c)) {
-                  throw new Error(`${c} is not formatted`);
-              }
-          }));
+                if (formatted.stdout !== await false.readFile(c)) {
+                    throw new Error(`${c} is not formatted`);
+                }
+            }));
