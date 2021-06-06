@@ -46,7 +46,7 @@ jobs:
               await Promise.all(configs.map(async c => {
                 const formatted = (await $`packer fix ${c}`).stdout;
 
-                if (formatted === await fs.readFile(c)) {
+                if (formatted === await fs.readFile(c, {encoding: "utf-8"})) {
                   return;
                 }
 
@@ -68,7 +68,6 @@ jobs:
 
               unformatted = await format(true);
             }
-            await $`git diff`
 
             if (unformatted.length) {
               throw new Error("Following files are not formatted:\n" + unformatted.join("\n"));

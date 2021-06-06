@@ -1,6 +1,6 @@
 {
-"builders": [
-{
+  "builders": [
+    {
       "disk_discard": "unmap",
       "disk_image": true,
       "disk_interface": "virtio-scsi",
@@ -37,3 +37,4 @@
     }
   ]
 }
+
