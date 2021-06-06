@@ -29,16 +29,45 @@ jobs:
           zx /tmp/script.mjs
         env: 
           SCRIPT: |
+            const pullReq = "${{github.event_name}}" === "pull_request";
             const configs = (await $`find images -name "*.json"`)
-                .stdout
-                .split("\n")
-                .filter(x => x !== "");
+              .stdout
+              .split("\n")
+              .filter(x => x !== "");
+
+            const format = async (writeResult) => {
+              const unformatted = [];
+              await Promise.all(configs.map(async c => {
+                const formatted = (await $`packer fix ${c}`).stdout;
+
+                if (formatted === await fs.readFile(c)) {
+                  continue;
+                }
+
+                unformatted.push(c);
+
+                if (writeResult) {
+                  await fs.writeFile(c, formatted);
+                }
+              }));
+
+              return unformatted;
+            };
+
+            let unformatted = await format(pullReq);
+
+            if (unformatted.length && pullReq) {
+              await $`git add . && git commit -m "packer fix"`;
+              await $`git push origin ${{ github.ref }}`;
+
+              unformatted = await format(false);
+            }
+
+            if (unformatted.length) {
+              throw new Error("Following files are not formatted:\n" + unformatted.join("\n"));
+            }
 
             await Promise.all(configs.map(async c => {
-                await $`packer validate ${c}`;
-                const formatted = await $`packer fix ${c}`;
-
-                if (formatted.stdout !== await false.readFile(c)) {
-                    throw new Error(`${c} is not formatted`);
-                }
+              await $`packer validate ${c}`
             }));
+
