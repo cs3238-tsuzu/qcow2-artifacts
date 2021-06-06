@@ -21,10 +21,12 @@ jobs:
 
       - name: Install zx
         run: |
-          npm i zx
+          npm i -g zx
 
-      - uses: actions/github-script@v4
-        with: 
+      - name: packer validator/linter
+        run: |
+          echo "$script" | zx /dev/stdin
+        env: 
           script: |
             const {$} = require("zx");
 
