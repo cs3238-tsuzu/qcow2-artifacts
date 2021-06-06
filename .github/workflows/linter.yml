@@ -1,7 +1,6 @@
 name: Linter
 
 on:
-  push:
   pull_request:
 
 jobs:
@@ -63,7 +62,7 @@ jobs:
 
             if (unformatted.length && pullReq) {
               await $`git add . && git commit -m "packer fix"`;
-              await $`git push origin ${{ github.ref }}`;
+              await $`git push origin ${{ github.base_ref }}`;
 
               unformatted = await format(false);
             }
