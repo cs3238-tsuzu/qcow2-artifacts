@@ -25,11 +25,10 @@ jobs:
 
       - name: packer validator/linter
         run: |
-          echo "$script" | zx /dev/stdin
+          echo "$SCRIPT" > /tmp/script.mjs
+          zx /tmp/script.mjs
         env: 
-          script: |
-            const {$} = require("zx");
-
+          SCRIPT: |
             const configs = (await $`find images -name "*.json"`)
                 .stdout
                 .split("\n")
