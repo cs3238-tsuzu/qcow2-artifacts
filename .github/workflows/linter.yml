@@ -1,4 +1,4 @@
-name: Packer
+name: Linter
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
 
       - name: Install zx
         run: |
-          npm i -g zx
+          npm i zx
 
       - uses: actions/github-script@v4
         with: 
