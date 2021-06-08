@@ -6,4 +6,3 @@ users:
     sudo: ALL=(ALL) NOPASSWD:ALL
     passwd: $6$tXF3sTmGEMKhsanM$LyJQLz8lfqQITkNXTiVyAErUXpGkplHX3ftXZCB5/shRGqO7EuOnkRQ5cVjHNmqgAYzMwyOTPkDbZbuj26H6W0
     lock_passwd: false
-EOF
