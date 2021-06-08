@@ -25,6 +25,8 @@ jobs:
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+        with:
+          platforms: x86_64
 
       - name: Build images
         run: |
