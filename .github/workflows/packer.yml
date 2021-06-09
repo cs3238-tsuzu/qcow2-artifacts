@@ -32,6 +32,7 @@ jobs:
           echo "$SCRIPT" | zx
         env:
           SCRIPT: |
+            import path from "path";
             const configs = (await $`find images -name "*.json"`)
               .stdout
               .split("\n")
