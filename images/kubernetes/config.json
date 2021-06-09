@@ -6,7 +6,7 @@
       "disk_interface": "virtio-scsi",
       "disk_size": "5120M",
       "headless": true,
-      "http_directory": "common/cloud-data",
+      "http_directory": "../../common/cloud-data",
       "iso_checksum": "file:http://cloud-images.ubuntu.com/releases/bionic/release/SHA256SUMS",
       "iso_url": "http://cloud-images.ubuntu.com/releases/bionic/release/ubuntu-18.04-server-cloudimg-amd64.img",
       "qemuargs": [
@@ -21,6 +21,15 @@
     }
   ],
   "provisioners": [
+    {
+      "type": "file",
+      "source": "./run.sh",
+      "destination": "/tmp/run.sh"
+    },
+    {
+      "type": "shell",
+      "inline": ["sudo bash /tmp/run.sh"]
+    },
     {
       "execute_command": "sudo sh -c '{{ .Vars }} {{ .Path }}'",
       "inline": [

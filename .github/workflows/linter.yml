@@ -31,8 +31,7 @@ jobs:
 
       - name: packer validator/linter
         run: |
-          echo "$SCRIPT" > /tmp/script.mjs
-          zx /tmp/script.mjs
+          echo "$SCRIPT" | zx
         env: 
           SCRIPT: |
             const pullReq = "${{github.event_name}}" === "pull_request";

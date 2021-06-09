@@ -37,6 +37,9 @@ jobs:
               .split("\n")
               .filter(x => x !== "");
 
+            const root = process.cwd();
             for (const c of configs) {
+              cd(await $`dirname ${c}`);
               await $`packer build ${c}`
+              cd(root);
             }
