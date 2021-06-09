@@ -39,7 +39,8 @@ jobs:
 
             const root = process.cwd();
             for (const c of configs) {
-              cd((await $`dirname ${c}`).stdout.trim());
-              await $`packer build ${c}`
+              const dir = (await $`dirname ${c}`).stdout.trim();
+              cd(dir);
+              await $`packer build ${c.slice(dir.length)}`
               cd(root);
             }
