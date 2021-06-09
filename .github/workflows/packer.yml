@@ -41,6 +41,6 @@ jobs:
             for (const c of configs) {
               const dir = (await $`dirname ${c}`).stdout.trim();
               cd(dir);
-              await $`packer build ${c.slice(dir.length)}`
+              await $`packer build ${path.relative(dir, c)}`
               cd(root);
             }
