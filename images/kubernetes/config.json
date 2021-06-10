@@ -9,7 +9,7 @@
       "headless": true,
       "http_directory": "../../common/cloud-data",
       "iso_checksum": "file:http://cloud-images.ubuntu.com/releases/bionic/release/SHA256SUMS",
-      "iso_url": "http://cloud-images.ubuntu.com/releases/bionic/release/ubuntu-18.04-server-cloudimg-amd64.img",
+      "iso_url": "../../ubuntu-18.04-server-cloudimg-amd64.img",
       "qemuargs": [
         [
           "-smbios",

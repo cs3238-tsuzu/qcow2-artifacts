@@ -36,6 +36,10 @@ jobs:
           sudo mv oras-install/oras /usr/local/bin/
           rm -rf oras_0.12.0_*.tar.gz oras-install/
 
+      - name: Run prepare.sh
+        run: |
+          scripts/prepare.sh
+
       - name: Build images
         run: |
           echo "$SCRIPT" | zx
