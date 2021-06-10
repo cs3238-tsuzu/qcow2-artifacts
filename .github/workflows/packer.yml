@@ -45,3 +45,6 @@ jobs:
               await $`packer build ${path.relative(dir, c)}`
               cd(root);
             }
+
+            cd("images");
+            await $`find`;
