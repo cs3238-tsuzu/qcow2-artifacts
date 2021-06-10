@@ -52,7 +52,7 @@ jobs:
               const dir = (await $`dirname ${c}`).stdout.trim();
               cd(dir);
               await $`packer build ${path.relative(dir, c)}`;
-              const general = JSON.parse(await fs.readFile("general.json"));
+              const general = JSON.parse(await fs.readFile(`${dir}/general.json`));
               await $`mc cp output-qemu/packer-qemu wasabi/qcow2/${general.name}`;
 
               cd(root);
