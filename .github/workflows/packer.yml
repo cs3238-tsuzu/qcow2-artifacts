@@ -56,7 +56,7 @@ jobs:
               const dir = (await $`dirname ${c}`).stdout.trim();
               cd(dir);
               await $`packer build ${path.relative(dir, c)}`
-              await $`ls output-qemu`
+              await $`ls -la output-qemu/packer-qemu`
               cd(root);
             }
 
