@@ -42,7 +42,7 @@ jobs:
         env:
           SCRIPT: |
             import path from "path";
-            const configs = (await $`find images -name "*.json"`)
+            const configs = (await $`find images -name "config.json"`)
               .stdout
               .split("\n")
               .filter(x => x !== "");
