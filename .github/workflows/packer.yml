@@ -43,8 +43,6 @@ jobs:
               const dir = (await $`dirname ${c}`).stdout.trim();
               cd(dir);
               await $`packer build ${path.relative(dir, c)}`
+              await $`ls output-qemu`
               cd(root);
             }
-
-            cd("images");
-            await $`find`;
