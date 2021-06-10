@@ -27,6 +27,15 @@ jobs:
         run: |
           brew install qemu
 
+      - name: Install oras
+        run: |
+          cd /tmp
+          curl -LO https://github.com/oras-project/oras/releases/download/v0.12.0/oras_0.12.0_linux_amd64.tar.gz
+          mkdir -p oras-install/
+          tar -zxf oras_0.12.0_*.tar.gz -C oras-install/
+          sudo mv oras-install/oras /usr/local/bin/
+          rm -rf oras_0.12.0_*.tar.gz oras-install/
+
       - name: Build images
         run: |
           echo "$SCRIPT" | zx
@@ -46,3 +55,5 @@ jobs:
               await $`ls output-qemu`
               cd(root);
             }
+
+            await $`oras`;
