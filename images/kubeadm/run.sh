@@ -1,5 +1,7 @@
 #! /bin/bash
 
+export DEBIAN_FRONTEND=noninteractive
+
 # Install containerd
 
 cat > /etc/modules-load.d/containerd.conf <<EOF
