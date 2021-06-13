@@ -1,6 +1,7 @@
 #! /bin/bash
 
 export DEBIAN_FRONTEND=noninteractive
+export VERSION=1.21.1-00
 
 # Install containerd
 
@@ -61,5 +62,5 @@ cat <<EOF | tee /etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 apt-get update
-apt-get install -y kubelet kubeadm kubectl
+apt-get install -y kubelet=${VERSION} kubeadm=${VERSION} kubectl=${VERSION}
 apt-mark hold kubelet kubeadm kubectl
